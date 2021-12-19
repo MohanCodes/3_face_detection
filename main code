@@ -1,0 +1,44 @@
+import cv2
+
+# face detection function (library)
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+# read the images from its source - same folder
+img1 = cv2.imread('idk.png', 1)
+img2 = cv2.imread('test2.JPG', 1)
+img3 = cv2.imread('lena.jpg', 1)
+
+# convert the files to gray color
+gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+gray3 = cv2.cvtColor(img3, cv2.COLOR_BGR2GRAY)
+
+# applying face detection function
+faces1 = face_cascade.detectMultiScale(gray1, 1.1, 4)
+faces2 = face_cascade.detectMultiScale(gray2, 1.1, 4)
+faces3 = face_cascade.detectMultiScale(gray3, 1.1, 4)
+
+# applying renctangles function to the particular area
+for (x, y, w, h) in faces1:
+    cv2.rectangle(img1, (x, y), (x+w, y+h), (0, 200, 255, ), 5)
+for (x, y, w, h) in faces2:
+    cv2.rectangle(img2, (x, y), (x + w, y + h), (255, 150, 255,), 2)
+for (x, y, w, h) in faces3:
+    cv2.rectangle(img3, (x, y), (x+w, y+h), (55, 0, 255, ), 5)
+
+# show the results - faces
+cv2.imshow('img1', img1)
+cv2.imshow('img2', img2)
+cv2.imshow('img3', img3)
+
+k = cv2.waitKey(0)
+
+# define if user wants to delete or save the results shown, respectively
+if k == 27:
+    cv2.destroyAllWindows()
+elif k == ord('s'):
+    cv2.imwrite('test1_output.png', img1)
+    cv2.imwrite('test2_output.jpg', img2)
+    cv2.imwrite('test3_output.jpg', img3)
+    cv2.destroyAllWindows()
+
